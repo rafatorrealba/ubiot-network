@@ -92,8 +92,7 @@ peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride o
 
 peer lifecycle chaincode querycommitted --channelID mychannel --name basic --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-# sudo chmod 777 -R /home/rtorrealba/ubiot-network/organizations
-# cp -r /home/rtorrealba/ubiot-network/organizations explorer/
+cd /explorer
 
 
 echo 'httpOptions:

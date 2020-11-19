@@ -95,7 +95,6 @@ peer lifecycle chaincode querycommitted --channelID mychannel --name basic --caf
 # sudo chmod 777 -R /home/rtorrealba/ubiot-network/organizations
 # cp -r /home/rtorrealba/ubiot-network/organizations explorer/
 
-
 echo 'httpOptions:
       verify: false
 
