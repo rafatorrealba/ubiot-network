@@ -317,7 +317,7 @@ func main() {
 	http.HandleFunc("/updatereserveprice", updatereserveprice)
 	http.HandleFunc("/updatepriceperhour", updatepriceperhour)
 
-	fmt.Println("Serving in port 8081...")
+	fmt.Println("Serving in port 8080...")
 
 	log.Fatal(http.ListenAndServe(":8081", nil))
 }

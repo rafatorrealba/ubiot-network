@@ -142,7 +142,7 @@ sudo rm -rf /home/rtorrealba/ubiot-network/app/keystore
 sudo rm -rf /home/rtorrealba/ubiot-network/app/wallet
 
 MYIP=`curl checkip.amazonaws.com`
-PORT=":8080"
+PORT=":8081"
 echo "https://$MYIP$PORT"
 
 cd /home/rtorrealba/ubiot-network/app
