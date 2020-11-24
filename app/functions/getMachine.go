@@ -17,7 +17,7 @@ import (
 
 )
 
-func GetMachine(id string) string {
+func GetMachine(id string) []byte {
 	os.Setenv("DISCOVERY_AS_LOCALHOST", "true")
 	wallet, err := gateway.NewFileSystemWallet("wallet")
 	if err != nil {
@@ -70,5 +70,5 @@ func GetMachine(id string) string {
 
 	}
 	
-	return string(result)
+	return result
 }

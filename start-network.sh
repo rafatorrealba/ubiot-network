@@ -1,4 +1,4 @@
-cd /home/rtorrealba/ubiot-network/test-network
+cd /home/alejandro/ubiot-network/test-network
 
 ./network.sh down
 
@@ -92,8 +92,8 @@ peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride o
 
 peer lifecycle chaincode querycommitted --channelID mychannel --name basic --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-# sudo chmod 777 -R /home/rtorrealba/ubiot-network/organizations
-# cp -r /home/rtorrealba/ubiot-network/organizations explorer/
+# sudo chmod 777 -R /home/alejandro/ubiot-network/organizations
+# cp -r /home/alejandro/ubiot-network/organizations explorer/
 
 
 echo 'httpOptions:
@@ -114,10 +114,10 @@ orderers:
   orderer.example.com:
     url: grpcs://localhost:7050
     tlsCACerts:
-      path: "/home/rtorrealba/ubiot-network/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+      path: "/home/alejandro/ubiot-network/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
 
     grpcOptions:
-      ssl-target-name-override: orderer.example.com' >> /home/rtorrealba/ubiot-network/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.yaml
+      ssl-target-name-override: orderer.example.com' >> /home/alejandro/ubiot-network/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.yaml
 
 echo 'httpOptions:
       verify: false
@@ -137,17 +137,17 @@ orderers:
   orderer.example.com:
     url: grpcs://localhost:7050
     tlsCACerts:
-      path: "/home/rtorrealba/ubiot-network/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+      path: "/home/alejandro/ubiot-network/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
 
     grpcOptions:
-      ssl-target-name-override: orderer.example.com' >> /home/rtorrealba/ubiot-network/test-network/organizations/peerOrganizations/org2.example.com/connection-org2.yaml
+      ssl-target-name-override: orderer.example.com' >> /home/alejandro/ubiot-network/test-network/organizations/peerOrganizations/org2.example.com/connection-org2.yaml
 
-sudo rm -rf /home/rtorrealba/ubiot-network/app/keystore
-sudo rm -rf /home/rtorrealba/ubiot-network/app/wallet
+sudo rm -rf /home/alejandro/ubiot-network/app/keystore
+sudo rm -rf /home/alejandro/ubiot-network/app/wallet
 
 MYIP=`curl checkip.amazonaws.com`
 PORT=":8081"
 echo "https://$MYIP$PORT"
 
-cd /home/rtorrealba/ubiot-network/app
+cd /home/alejandro/ubiot-network/app
 go run server.go

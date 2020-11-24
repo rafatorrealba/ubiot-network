@@ -3,13 +3,28 @@
 package main
 
 import (
-	"encoding/json"
-	"fabcar/functions"
 	"fmt"
 	"log"
+	"path"
 	"net/http"
-	"strings"
+	"html/template"
+	"encoding/json"
+	"fabcar/functions"
+
 )
+
+type BasicMachine struct {
+	ID              string `json:"id"`
+	Lessor          string `json:"lessor"`
+	Status          string `json:"status"`
+	ReservePrice    uint64 `json:"reserveprice"`
+	WorkedHours     uint64 `json:"workedhours"`
+	PricePerHour    uint64 `json:"priceperhour"`
+	Lessee          string `json:"lessee"`
+	RentalTime      string `json:"rentaltime"`
+	PlaceOfDelivery string `json:"placeofdelivery"`
+	WorkHours       uint64 `json:"workhours"`
+}
 
 func main() {
 	getmachine := func(w http.ResponseWriter, r *http.Request) {
@@ -20,23 +35,43 @@ func main() {
 			fmt.Println(err)
 		}
 		id := r.PostFormValue("machineID")
-		js, err := json.Marshal(functions.GetMachine(id)) // To JSON
+		
+		js := functions.GetMachine(id) // To JSON
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+				
+		var ba BasicMachine
+		err = json.Unmarshal(js, &ba)
+		
+		// Print response as HTML
+		if  ba.ID == "" {
+			p := path.Join("static", "base.html")
+			tmpl, err := template.ParseFiles(p)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		
+			if err := tmpl.Execute(w, "Machine does not exists"); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			
+		} else {
+			p := path.Join("static", "get.html")
+			tmpl, err := template.ParseFiles(p)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		
+			if err := tmpl.Execute(w, ba); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		}	
 
-		// Removing unnecessary symbols to the message
-		cleanjs := strings.Replace(string(js), "\\", "", -1)
-
-		if cleanjs == "" {
-			w.Write([]byte("Machine does not exist"))
-			return
-		}
-
-		// Print received message in the web screen
-		w.Write([]byte(strings.Replace(cleanjs, "}},", "}}\n", -1)))
 	}
 
 	newmachine := func(w http.ResponseWriter, r *http.Request) {
@@ -62,8 +97,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	reservemachine := func(w http.ResponseWriter, r *http.Request) {
@@ -88,8 +132,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	sentmachine := func(w http.ResponseWriter, r *http.Request) {
@@ -111,8 +164,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	receivedmachine := func(w http.ResponseWriter, r *http.Request) {
@@ -134,8 +196,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	payperuse := func(w http.ResponseWriter, r *http.Request) {
@@ -158,8 +229,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+			// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	returnmachine := func(w http.ResponseWriter, r *http.Request) {
@@ -181,8 +261,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	machineincompany := func(w http.ResponseWriter, r *http.Request) {
@@ -204,8 +293,18 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
 	}
 
 	machineinmaintenance := func(w http.ResponseWriter, r *http.Request) {
@@ -227,8 +326,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	availablemachine := func(w http.ResponseWriter, r *http.Request) {
@@ -250,8 +358,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	updatereserveprice := func(w http.ResponseWriter, r *http.Request) {
@@ -274,8 +391,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	updatepriceperhour := func(w http.ResponseWriter, r *http.Request) {
@@ -298,8 +424,17 @@ func main() {
 			return
 		}
 
-		// Print received message in the web screen
-		w.Write(js)
+		// Print response as HTML
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	
+		if err := tmpl.Execute(w, string(js)); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	// Routing calls from the HTML file
