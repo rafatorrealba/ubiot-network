@@ -21,7 +21,7 @@ type ComplexContract struct {
 }
 
 //Constants and variables
-var walletSeed1 string = "UVZULUWZMKQLJISSR99GV9HJGEHXNLYRSOCRLNEIWBLYKIDXMYAGFNXUVZTPMELNHMZOUFPK9AFLOJLUV"
+var walletSeed1 string = "SEED"
 var walletSeed2 string
 var walletAddress1 string
 var walletAddress2 string = "SHMUHXOSTFSEA9QZEIANRGW9UGXOICU9DIVKOCDIIQPJ9JPUTSHHMRZKPGXUOWSEAKLOTDSGUHBGSWREXMIMWJRNZC"
