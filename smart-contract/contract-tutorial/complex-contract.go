@@ -24,7 +24,7 @@ type ComplexContract struct {
 var walletSeed1 string = "SEED"
 var walletSeed2 string
 var walletAddress1 string
-var walletAddress2 string = "SHMUHXOSTFSEA9QZEIANRGW9UGXOICU9DIVKOCDIIQPJ9JPUTSHHMRZKPGXUOWSEAKLOTDSGUHBGSWREXMIMWJRNZC"
+var walletAddress2 string = "GXLJHXUBWOQDQUOVJXBSIWV9JUJMLBQPILOGIZGWVVLSMJCOOORMAGAYDKLLUFOKUFLVGQZYEHKSSJDIWVUYA9NDAC"
 var walletKeyIndex uint64 = 3
 var amount uint64 = 0
 
