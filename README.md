@@ -57,13 +57,13 @@ cd ubiot-network/test-network/organizations/peerOrganizations/org1.example.com/u
 ls
 ```
 
-Copy the name of the file printed in the terminal and go to the connection/profile directory 
+* Copy the name of the file printed in the terminal and go to the connection/profile directory 
 
 ```
 cd ubiot-network/explorer/connection-profile/
 ```
 
-now edit the first-network.json
+* now edit the first-network.json
 
 ```
 nano first-network.json
@@ -76,4 +76,4 @@ Save the file, go to the explorer's directory and execute the following command:
 docker-compose up
 ```
 
-Open your browser and go to the virtual machine IP address on 8081 port*
+* Open your browser and go to the virtual machine IP address on 8081 port*
