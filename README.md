@@ -7,7 +7,7 @@ Hyperledger Fabric network for rental machine UbiotThis is a network for purchas
 * Select the virtual machine an run
 https://console.cloud.google.com/compute/instancesproject=guminator&instancessize=50
 
-##Connect to the virtual machine 
+## Connect to the virtual machine 
 
 * Copy the following command and paste it in your terminal
 
@@ -23,7 +23,7 @@ gcloud beta compute ssh --zone "us-central1-a" "rtorrealba@twinbiot" --project "
 cd /home/rtorrealba/ubiot-network
 ```
 
-*Run the startup network script
+* Run the startup network script
 
 ```
 ./start-network
@@ -57,14 +57,13 @@ cd ubiot-network/test-network/organizations/peerOrganizations/org1.example.com/u
 ls
 ```
 
-Copy the name of the file printed in the terminal
-Go to the connection/profile directory 
+Copy the name of the file printed in the terminal and go to the connection/profile directory 
 
 ```
 cd ubiot-network/explorer/connection-profile/
 ```
 
-and edit the first-network.json
+now edit the first-network.json
 
 ```
 nano first-network.json
