@@ -5,7 +5,8 @@ Hyperledger Fabric network for rental machine UbiotThis is a network for purchas
 ## Turn on the virtual machine "twinbiot"
 
 * Select the virtual machine an run
-https://console.cloud.google.com/compute/instancesproject=guminator&instancessize=50
+
+https://console.cloud.google.com/compute/instances?project=guminator&folder&organizationId=148075794671&instancessize=50
 
 ## Connect to the virtual machine 
 
