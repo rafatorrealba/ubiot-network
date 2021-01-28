@@ -8,8 +8,8 @@ import (
 	"encoding/json"
 
 	. "github.com/iotaledger/iota.go/api"
-    "github.com/iotaledger/iota.go/trinary"
-    "github.com/iotaledger/iota.go/bundle"
+    	"github.com/iotaledger/iota.go/trinary"
+    	"github.com/iotaledger/iota.go/bundle"
 
 	"github.com/rafatorrealba/hlf-iota-conector/iota" 			// Module of IOTA Connector
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -508,6 +508,37 @@ func (cc *ComplexContract) GetMachine(ctx CustomTransactionContextInterface, id 
 	return ba, nil
 }
 
+// GetAll returns all assets found in world state
+func (cc *ComplexContract) GetAll(ctx CustomTransactionContextInterface) ([]*BasicMachine, error) {
+
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	var bas []*BasicMachine
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+
+		if err != nil {
+			return nil, err
+		}
+
+		var ba BasicMachine
+		err = json.Unmarshal(queryResponse.Value, &ba)
+
+		if err != nil {
+			return nil, err
+		}
+		//fmt.Println(len(bas)) //Print number of machines
+		bas = append(bas, &ba)
+	}
+
+	return bas, nil
+}
+
 func TransferIOTA(seed string, recipientAddress string, amount uint64) {
     // Connect to a node
     api, err := ComposeAPI(HTTPClientSettings{URI: "https://nodes.thetangle.org:443"})
@@ -544,6 +575,6 @@ func must(err error) {
 }
 
 // GetEvaluateTransactions returns functions of ComplexContract not to be tagged as submit
-func (cc *ComplexContract) GetEvaluateTransactions() []string {
-	return []string{"GetMachine"}
-}
+//func (cc *ComplexContract) GetEvaluateTransactions() []string {
+//	return []string{"GetMachine"}
+//}
