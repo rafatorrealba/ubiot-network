@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"path"
+	"strings"
 	"net/http"
 	"html/template"
 	"encoding/json"
@@ -27,6 +28,39 @@ type BasicMachine struct {
 }
 
 func main() {
+	
+	getall := func(w http.ResponseWriter, r *http.Request) {
+
+		result := functions.GetAll() // To JSON
+		clean := string(result[1:(len(string(result))) - 1])
+
+		str := strings.ReplaceAll(clean, "},", "},,")
+		s := strings.Split(string(str), ",,")
+		
+		var bas []*BasicMachine
+		for i, j := range s {
+			if j == "" {}
+			var ba BasicMachine
+			_ = json.Unmarshal([]byte(s[i]), &ba)
+
+			bas = append(bas, &ba)
+			//fmt.Println(bas[(len(bas) - 1)], "\n")
+
+			p := path.Join("static", "getAll.html")
+			tmpl, err := template.ParseFiles(p)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			if err := tmpl.Execute(w, bas[(len(bas) - 1)]); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			
+		}
+
+	}
+	
 	getmachine := func(w http.ResponseWriter, r *http.Request) {
 
 		// Get data from HTML forms
@@ -439,6 +473,7 @@ func main() {
 
 	// Routing calls from the HTML file
 	http.Handle("/", http.FileServer(http.Dir("./static")))
+	http.HandleFunc("/getall", getall)
 	http.HandleFunc("/getmachine", getmachine)
 	http.HandleFunc("/newmachine", newmachine)
 	http.HandleFunc("/reservemachine", reservemachine)
