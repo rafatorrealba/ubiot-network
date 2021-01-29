@@ -9,158 +9,20 @@
   </head>
 
   <body>
-    <img src="https://pbs.twimg.com/profile_images/971755977488912384/Sm39bJfl.jpg">
+    <br></br>
+    <img src="https://pbs.twimg.com/profile_images/971755977488912384/Sm39bJfl.jpg" style="width: 300px; height: 300px;margin-left: auto; margin-right: auto;">
+    <br></br>
     <h1>TwinBiot</h1>
     <br></br>
-  
-      <!--GetAll: ... -->
-    <form action="/getall" method="POST">
-      <label><strong>Get All</strong></label>
-      <br></br>
-      <p><label for="id">Show all machines in the network</label>
-      <br></br>
-      <input type="submit" value='Get'></button>
-    </form>
-    <br></br>
-
-    <!--GetMachine: ... -->
-    <form action="/getmachine" method="POST">
-      <label><strong>Get Machine</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <input type="submit" value='Get'></button>
-    </form>
-    <br></br>
-
-    <!--NewMachine: ... -->
-    <form method='POST' action='/newmachine'>
-      <label><strong>Create New Machine</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <p><label for="lessor">Lessor:</label>
-      <input type="text" name="lessor" id="lessor"></p>
-      <p><label for="reserveprice">Reserve Price:</label>
-      <input type="text" name="reserveprice" id="reserveprice"></p>
-      <p><label for="workedhours">Worked Hours:</label>
-      <input type="text" name="workedhours" id="workedhours"></p>
-      <p><label for="priceperhour">Price per Hour:</label>
-      <input type="text" name="priceperhour" id="priceperhour"></p>
-      <input type='submit' value="Create"></p>
-    </form>
-    <br></br>
-
-    <!--ReserveMachine: ... -->
-    <form method='POST' action='/reservemachine'>
-      <label><strong>Reserve Machine</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <p><label for="lesseeAdd">Lessee:</label>
-      <input type="text" name="lesseeAdd" id="lesseeAdd"></p>
-      <p><label for="rentaltime">Rental time:</label>
-      <input type="text" name="rentaltime" id="rentaltime"></p>
-      <p><label for="placeofdeliveryAdd"> Place of delivery:</label>
-      <input type="text" name="placeofdeliveryAdd" id="placeofdeliveryAdd"></p>
-      <input type='submit' value=" Reserve"></p>
-    </form>
-    <br></br>
-
-    <!--SendMachine: ... -->
-    <form action="/sentmachine" method="POST">
-      <label><strong>Send Machine</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <input type="submit" value='Send'></button>
-    </form>
-    <br></br>
-
-    <!--ReceivedMachine: ... -->
-    <form action="/receivedmachine" method="POST">
-      <label><strong>Received Machine</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <input type="submit" value='Received'></button>
-    </form>
-    <br></br>
-
-    <!--PayPerUse: ... -->
-    <form action="/payperuse" method="POST">
-      <label><strong>Pay Per Use</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <p><label for="id">Work Hours:</label>
-      <input type="text" name="workhours" id="workhours"></p>
-      <input type="submit" value='Work'></button>
-    </form>
-    <br></br>
     
-    <!--ReturnMachine: ... -->
-    <form action="/returnmachine" method="POST">
-      <label><strong>Return Machine</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <input type="submit" value='Return'></button>
+    <form action="/menu" method="POST" style="text-align: center;">
+        <label><strong>Here we can write the welcome text</strong></label>
+        <br></br>
+        <input type="submit" value='Lessee' formaction="/menuLessee"></button>
+        <input type="submit" value='Lessor' formaction="/menuLessor"></button>
+        <input type="submit" value='Admin' formaction="/menuAdmin"></button>
     </form>
-    <br></br>
-    
-    <!--MachineInCompany: ... -->
-    <form action="/machineincompany" method="POST">
-      <label><strong>Machine In Company</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <input type="submit" value='In Company'></button>
-    </form>
-    <br></br>
-    
-    <!--MachineInMaintenance: ... -->
-    <form action="/machineinmaintenance" method="POST">
-      <label><strong>Machine in Maintenance</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <input type="submit" value='Maintenance'></button>
-    </form>
-    <br></br>
-      
-    <!--AvailableMachine: ... -->
-    <form action="/availablemachine" method="POST">
-      <label><strong>Machine Available</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <input type="submit" value='Available'></button>
-    </form>
-    <br></br>
 
-    <!--UpdateReservePrice: ... -->
-    <form action="/updatereserveprice" method="POST">
-      <label><strong>Update Reserve Price</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <p><label for="reservepriceAdd">Add new reserved price:</label>
-      <input type="text" name="reservepriceAdd" id="reservepriceAdd"></p>
-      <input type="submit" value='Update'></button>
-    </form>
-    <br></br>
-    
-    <!--UpdatePricePerHour: ... -->
-    <form action="/updatepriceperhour" method="POST">
-      <label><strong>Update Price Per Hour</strong></label>
-      <br></br>
-      <p><label for="id">ID:</label>
-      <input type="text" name="machineID" id="machineID"></p>
-      <p><label for="priceperhour">Add new price:</label>
-      <input type="text" name="priceperhour" id="priceperhour"></p>
-      <input type="submit" value='Update'></button>
-    </form>
     <br></br>
 
   </body>
