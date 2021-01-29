@@ -1,0 +1,79 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>TwinBiot - Admin</title>
+        <link rel="icon" type="image/png" href="https://pbs.twimg.com/profile_images/971755977488912384/Sm39bJfl.jpg">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <input type="button" onclick="window.open('http://localhost:8080')"; value="Go to Explorer" />
+
+        <img src="https://pbs.twimg.com/profile_images/971755977488912384/Sm39bJfl.jpg">
+        <h1>TwinBiot</h1>
+        <br></br>
+
+        <!--GetAll: ... -->
+        <form action="/getall" method="POST">
+            <label><strong>Get All</strong></label>
+            <br></br>
+            <p><label for="id">Show all machines in the network</label>
+            <br></br>
+            <input type="submit" value='Get'></button>
+        </form>
+        <br></br>
+
+        <!--GetMachine: ... -->
+        <form action="/getmachine" method="POST">
+            <label><strong>Get Machine</strong></label>
+            <br></br>
+            <p><label for="id">ID:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Get'></button>
+        </form>
+        <br></br>
+
+        <!--CreateChannell: ... -->
+        <form action="/craetecha" method="POST">
+            <label><strong>Create Channell</strong></label>
+            <br></br>
+            <p><label for="id">Insert name:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Create'></button>
+        </form>
+        <br></br>
+
+
+        <!--CreateOrganization: ... -->
+        <form action="/createorg" method="POST">
+            <label><strong>Create Organization</strong></label>
+            <br></br>
+            <p><label for="id">Insert name:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Create'></button>
+        </form>
+        <br></br>
+
+        <!--JoinOrganization: ... -->
+        <form action="/joinorg" method="POST">
+            <label><strong>Join Organization</strong></label>
+            <br></br>
+            <p><label for="id">Insert names:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Join'></button>
+        </form>
+        <br></br>
+
+        <!--InsatallSmartContract: ... -->
+        <form action="/installsc" method="POST">
+            <label><strong>Install Smart Contract</strong></label>
+            <br></br>
+            <p><label for="id">Insert names:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Install'></button>
+        </form>
+        <br></br>
+
+    </body>
+</html>
