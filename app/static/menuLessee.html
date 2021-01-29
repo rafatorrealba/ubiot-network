@@ -1,0 +1,86 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>TwinBiot - Lessee</title>
+        <link rel="icon" type="image/png" href="https://pbs.twimg.com/profile_images/971755977488912384/Sm39bJfl.jpg">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <input type="button" onclick="window.open('http://localhost:8080')"; value="Go to Explorer" />
+
+        <img src="https://pbs.twimg.com/profile_images/971755977488912384/Sm39bJfl.jpg">
+        <h1>TwinBiot</h1>
+        <br></br>
+
+        <!--GetAll: ... -->
+        <form action="/getall" method="POST">
+            <label><strong>Get All</strong></label>
+            <br></br>
+            <p><label for="id">Show all machines in the network</label>
+            <br></br>
+            <input type="submit" value='Get'></button>
+        </form>
+        <br></br>
+
+        <!--GetMachine: ... -->
+        <form action="/getmachine" method="POST">
+            <label><strong>Get Machine</strong></label>
+            <br></br>
+            <p><label for="id">ID:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Get'></button>
+        </form>
+        <br></br>
+
+        <!--ReserveMachine: ... -->
+        <form method='POST' action='/reservemachine'>
+            <label><strong>Reserve Machine</strong></label>
+            <br></br>
+            <p><label for="id">ID:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <p><label for="lesseeAdd">Lessee:</label>
+            <input type="text" name="lesseeAdd" id="lesseeAdd"></p>
+            <p><label for="rentaltime">Rental time:</label>
+            <input type="text" name="rentaltime" id="rentaltime"></p>
+            <p><label for="placeofdeliveryAdd"> Place of delivery:</label>
+            <input type="text" name="placeofdeliveryAdd" id="placeofdeliveryAdd"></p>
+            <input type='submit' value=" Reserve"></p>
+        </form>
+        <br></br>
+
+        <!--ReceivedMachine: ... -->
+        <form action="/receivedmachine" method="POST">
+            <label><strong>Received Machine</strong></label>
+            <br></br>
+            <p><label for="id">ID:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Received'></button>
+        </form>
+        <br></br>
+
+        <!--PayPerUse: ... -->
+        <form action="/payperuse" method="POST">
+            <label><strong>Pay Per Use</strong></label>
+            <br></br>
+            <p><label for="id">ID:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <p><label for="id">Work Hours:</label>
+            <input type="text" name="workhours" id="workhours"></p>
+            <input type="submit" value='Work'></button>
+        </form>
+        <br></br>
+
+        <!--ReturnMachine: ... -->
+        <form action="/returnmachine" method="POST">
+            <label><strong>Return Machine</strong></label>
+            <br></br>
+            <p><label for="id">ID:</label>
+            <input type="text" name="machineID" id="machineID"></p>
+            <input type="submit" value='Return'></button>
+        </form>
+        <br></br>
+
+    </body>
+</html>
