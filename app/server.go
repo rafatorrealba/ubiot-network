@@ -29,6 +29,48 @@ type BasicMachine struct {
 
 func main() {
 	
+		menuLessee := func(w http.ResponseWriter, r *http.Request) {
+		p := path.Join("static", "menuLessee.html")
+			tmpl, err := template.ParseFiles(p)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			if err := tmpl.Execute(w, ""); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+
+	}
+
+	menuLessor := func(w http.ResponseWriter, r *http.Request) {
+		p := path.Join("static", "menuLessor.html")
+			tmpl, err := template.ParseFiles(p)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			if err := tmpl.Execute(w, ""); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+
+	}
+
+	menuAdmin := func(w http.ResponseWriter, r *http.Request) {
+		p := path.Join("static", "menuAdmin.html")
+			tmpl, err := template.ParseFiles(p)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			if err := tmpl.Execute(w, ""); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+
+	}
+	
 	getall := func(w http.ResponseWriter, r *http.Request) {
 
 		result := functions.GetAll() // To JSON
@@ -473,6 +515,9 @@ func main() {
 
 	// Routing calls from the HTML file
 	http.Handle("/", http.FileServer(http.Dir("./static")))
+	http.HandleFunc("/menuLessee", menuLessee)
+	http.HandleFunc("/menuLessor", menuLessor)
+	http.HandleFunc("/menuAdmin", menuAdmin)
 	http.HandleFunc("/getall", getall)
 	http.HandleFunc("/getmachine", getmachine)
 	http.HandleFunc("/newmachine", newmachine)
