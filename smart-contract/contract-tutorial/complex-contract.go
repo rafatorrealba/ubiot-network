@@ -2,17 +2,17 @@ package main
 
 // Importing modules
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
-	"errors"
-	"encoding/json"
 
 	. "github.com/iotaledger/iota.go/api"
-    	"github.com/iotaledger/iota.go/trinary"
-    	"github.com/iotaledger/iota.go/bundle"
+	"github.com/iotaledger/iota.go/bundle"
+	"github.com/iotaledger/iota.go/trinary"
 
-	"github.com/rafatorrealba/hlf-iota-conector/iota" 			// Module of IOTA Connector
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+	"github.com/rafatorrealba/hlf-iota-conector/iota" // Module of IOTA Connector
 )
 
 // ComplexContract contract for handling BasicMachines
@@ -59,10 +59,10 @@ func (cc *ComplexContract) NewMachine(ctx CustomTransactionContextInterface, id 
 	}
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "New machine:", "Root:", root)  			                    	// Printing logs
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "New machine:", "Root:", root) // Printing logs
 
 	return nil
 }
@@ -89,9 +89,9 @@ func (cc *ComplexContract) ReserveMachine(ctx CustomTransactionContextInterface,
 	}
 
 	//IOTA Transfer
-	amount = ba.ReservePrice                            // Assinging the reserved price as amount to transfer
-	TransferIOTA(walletSeed1, walletAddress2, amount)	// Init transfer
-	
+	amount = ba.ReservePrice                          // Assinging the reserved price as amount to transfer
+	TransferIOTA(walletSeed1, walletAddress2, amount) // Init transfer
+
 	// Updating the state of the machine
 	ba.Lessee = lesseeAdd
 	ba.SetStatusReserved()
@@ -102,10 +102,10 @@ func (cc *ComplexContract) ReserveMachine(ctx CustomTransactionContextInterface,
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "New reserve:", "Root:", root)  			                    	// Printing logs
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "New reserve:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -142,11 +142,10 @@ func (cc *ComplexContract) SentMachine(ctx CustomTransactionContextInterface, id
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Machine sent:", "Root:", root)  			                    // Printing logs
-
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Machine sent:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -183,11 +182,10 @@ func (cc *ComplexContract) ReceivedMachine(ctx CustomTransactionContextInterface
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Machine received:", "Root:", root)  			                // Printing logs
-
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Machine received:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -219,8 +217,8 @@ func (cc *ComplexContract) PayPerUse(ctx CustomTransactionContextInterface, id s
 	}
 
 	//IOTA transfer
-	amount = ba.PricePerHour * workhoursAdd            	//Assinging the reserved price as amount to transfer
-	TransferIOTA(walletSeed1, walletAddress2, amount)	// Init transfer
+	amount = ba.PricePerHour * workhoursAdd           //Assinging the reserved price as amount to transfer
+	TransferIOTA(walletSeed1, walletAddress2, amount) // Init transfer
 
 	// Updating the state of the machine
 	ba.SetStatusWorking()
@@ -231,11 +229,10 @@ func (cc *ComplexContract) PayPerUse(ctx CustomTransactionContextInterface, id s
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Machine working:", "Root:", root)  			                    // Printing logs
-
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Machine working:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -278,11 +275,10 @@ func (cc *ComplexContract) ReturnedMachine(ctx CustomTransactionContextInterface
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Machine returned:", "Root:", root)  			                // Printing logs
-
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Machine returned:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -320,11 +316,10 @@ func (cc *ComplexContract) MachineInCompany(ctx CustomTransactionContextInterfac
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Machine in company:", "Root:", root)  			                // Printing logs
-
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Machine in company:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -362,11 +357,10 @@ func (cc *ComplexContract) MachineInMaintenance(ctx CustomTransactionContextInte
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Machine in maintenance:", "Root:", root)  			            // Printing logs
-
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Machine in maintenance:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -404,10 +398,10 @@ func (cc *ComplexContract) AvailableMachine(ctx CustomTransactionContextInterfac
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Machine available:", "Root:", root)  			                // Printing logs
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Machine available:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -440,10 +434,10 @@ func (cc *ComplexContract) UpdateReservePrice(ctx CustomTransactionContextInterf
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Price updated:", "Root:", root)  			                    // Printing logs
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Price updated:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -476,10 +470,10 @@ func (cc *ComplexContract) UpdatePricePerHour(ctx CustomTransactionContextInterf
 	baBytes, _ := json.MarshalIndent(ba, "", "  ")
 
 	// Communication with IOTA through MAM
-	timestamp := time.Now().String()[0:19]                                                  // Get te current date and time                                
+	timestamp := time.Now().String()[0:19] // Get te current date and time
 	_, root, _ := iota.PublishAndReturnState(
-		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey))		// Inint function to send MAM
-	fmt.Println(timestamp, "Price updated:", "Root:", root)  			                    // Printing logs
+		string(baBytes), false, "", "", iota.MamMode, iota.PadSideKey(iota.MamSideKey)) // Inint function to send MAM
+	fmt.Println(timestamp, "Price updated:", "Root:", root) // Printing logs
 
 	err = ctx.GetStub().PutState(id, []byte(baBytes))
 
@@ -540,38 +534,38 @@ func (cc *ComplexContract) GetAll(ctx CustomTransactionContextInterface) ([]*Bas
 }
 
 func TransferIOTA(seed string, recipientAddress string, amount uint64) {
-    // Connect to a node
-    api, err := ComposeAPI(HTTPClientSettings{URI: "https://nodes.thetangle.org:443"})
-    must(err)
+	// Connect to a node
+	api, err := ComposeAPI(HTTPClientSettings{URI: "https://nodes.thetangle.org:443"})
+	must(err)
 
-    // Define an address to which to send IOTA tokens 
-    address := trinary.Trytes(recipientAddress)
+	// Define an address to which to send IOTA tokens
+	address := trinary.Trytes(recipientAddress)
 
-    // Define an input transaction object
-    // that sends 1 i to your new address
-    transfers := bundle.Transfers{
-          {
-              Address: address,
-              Value: amount,
-          },
-      }
+	// Define an input transaction object
+	// that sends 1 i to your new address
+	transfers := bundle.Transfers{
+		{
+			Address: address,
+			Value:   amount,
+		},
+	}
 
-    fmt.Println("Sending 1 i to " + walletAddress2);
+	fmt.Println("Sending 1 i to " + walletAddress2)
 
-    trytes, err := api.PrepareTransfers(seed, transfers, PrepareTransfersOptions{})
-    must(err)
-    
-    myBundle, err := api.SendTrytes(trytes, 3, 14)
-    must(err)
+	trytes, err := api.PrepareTransfers(seed, transfers, PrepareTransfersOptions{})
+	must(err)
 
-    hash, _ := json.Marshal(myBundle)
-    fmt.Println("HASH: " + string(hash[9:92]) + "\n")
+	myBundle, err := api.SendTrytes(trytes, 3, 14)
+	must(err)
+
+	hash, _ := json.Marshal(myBundle)
+	fmt.Println("HASH: " + string(hash[9:92]) + "\n")
 }
 
 func must(err error) {
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 }
 
 // GetEvaluateTransactions returns functions of ComplexContract not to be tagged as submit

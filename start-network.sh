@@ -92,9 +92,26 @@ peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride o
 
 peer lifecycle chaincode querycommitted --channelID mychannel --name basic --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-# sudo chmod 777 -R /home/rtorrealba/ubiot-network/organizations
-# cp -r /home/rtorrealba/ubiot-network/organizations explorer/
+# Impplementacion del explorador de la red 
+cd
 
+sudo chmod 777 -R ubiot-network/test-network/organizations/
+
+cp -r ubiot-network/test-network/organizations/ ubiot-network/explorer/
+
+cd ubiot-network/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/
+
+CLAVE=$(ls)
+
+cd 
+
+sed -i "s/CLAVE/$CLAVE/g" ubiot-network/explorer/connection-profile/first-network.json
+
+cd ubiot-network/explorer
+
+docker-compose up -d
+
+cd
 
 echo 'httpOptions:
       verify: false
@@ -147,7 +164,7 @@ sudo rm -rf /home/rtorrealba/ubiot-network/app/wallet
 
 MYIP=`curl checkip.amazonaws.com`
 PORT=":8081"
-echo "https://$MYIP$PORT"
+echo "http://$MYIP$PORT"
 
 cd /home/rtorrealba/ubiot-network/app
 go run server.go
