@@ -79,7 +79,7 @@ docker-compose up
 
 * Open your browser and go to the virtual machine IP address on 8081 port*
 
-# Update seed and key index in the smart contract
+## Update seed and key index in the smart contract
 In order to update seed, key index fields in the smart contract and run the network use:
 ```
 ./updateSeed.sh -s "SEED" -k KEYINDEX
