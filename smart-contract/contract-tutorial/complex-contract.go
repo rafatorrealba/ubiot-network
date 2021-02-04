@@ -24,8 +24,8 @@ type ComplexContract struct {
 var walletSeed1 string = "SEED"
 var walletSeed2 string
 var walletAddress1 string
-var walletAddress2 string = "GXLJHXUBWOQDQUOVJXBSIWV9JUJMLBQPILOGIZGWVVLSMJCOOORMAGAYDKLLUFOKUFLVGQZYEHKSSJDIWVUYA9NDAC"
-var walletKeyIndex uint64 = 3
+var walletAddress2 string = "YVPHCOQE9YTMVXMYJOMUTSZCGXQIUZ9RNFQUTNVNCPN9YZQMCXBHFPOHLSLPOOQULHYSFGWPWWHOAR9KCMIDDZU9ID"
+var walletKeyIndex uint64 = 0
 var amount uint64 = 0
 
 // NewMachine function adds a new basic machine to the world state using id as key
