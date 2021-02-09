@@ -3,15 +3,15 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"path"
-	"strings"
-	"net/http"
-	"html/template"
 	"encoding/json"
 	"fabcar/functions"
-
+	"fmt"
+	"html/template"
+	"log"
+	"net/http"
+	"os/exec"
+	"path"
+	"strings"
 )
 
 type BasicMachine struct {
@@ -28,60 +28,127 @@ type BasicMachine struct {
 }
 
 func main() {
-	
-		menuLessee := func(w http.ResponseWriter, r *http.Request) {
-		p := path.Join("static", "menuLessee.html")
-			tmpl, err := template.ParseFiles(p)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
 
-			if err := tmpl.Execute(w, ""); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-			}
+	menuLessee := func(w http.ResponseWriter, r *http.Request) {
+		p := path.Join("static", "menuLessee.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if err := tmpl.Execute(w, ""); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 
 	}
 
 	menuLessor := func(w http.ResponseWriter, r *http.Request) {
 		p := path.Join("static", "menuLessor.html")
-			tmpl, err := template.ParseFiles(p)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
-			if err := tmpl.Execute(w, ""); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-			}
+		if err := tmpl.Execute(w, ""); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 
 	}
 
 	menuAdmin := func(w http.ResponseWriter, r *http.Request) {
 		p := path.Join("static", "menuAdmin.html")
-			tmpl, err := template.ParseFiles(p)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
-			if err := tmpl.Execute(w, ""); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-			}
+		if err := tmpl.Execute(w, ""); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 
 	}
-	
+
+	cch := func(w http.ResponseWriter, r *http.Request) {
+
+		// Get data from HTML forms
+		err := r.ParseForm()
+		if err != nil {
+			fmt.Println(err)
+		}
+		channelid := r.PostFormValue("channelID")
+
+		// Function execution
+		err = exec.Command("bash", "./scripts/cch.sh", "-c", string(channelid)).Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if err := tmpl.Execute(w, "Your channell was created successfully"); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
+	}
+
+	joinorg3 := func(w http.ResponseWriter, r *http.Request) {
+
+		// Get data from HTML forms
+		err := r.ParseForm()
+		if err != nil {
+			fmt.Println(err)
+		}
+		channelid := r.PostFormValue("channelID")
+
+		// Function execution
+		err = exec.Command("bash", "./scripts/joinorg3.sh", "-c", string(channelid)).Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if err := tmpl.Execute(w, "Organization 3 successfully added to the channel"); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
+	}
+
 	getall := func(w http.ResponseWriter, r *http.Request) {
 
 		result := functions.GetAll() // To JSON
-		clean := string(result[1:(len(string(result))) - 1])
+		clean := string(result[1 : (len(string(result)))-1])
 
 		str := strings.ReplaceAll(clean, "},", "},,")
 		s := strings.Split(string(str), ",,")
-		
+
 		var bas []*BasicMachine
 		for i, j := range s {
-			if j == "" {}
+			if j == "" {
+			}
 			var ba BasicMachine
 			_ = json.Unmarshal([]byte(s[i]), &ba)
 
@@ -95,14 +162,14 @@ func main() {
 				return
 			}
 
-			if err := tmpl.Execute(w, bas[(len(bas) - 1)]); err != nil {
+			if err := tmpl.Execute(w, bas[(len(bas)-1)]); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
-			
+
 		}
 
 	}
-	
+
 	getmachine := func(w http.ResponseWriter, r *http.Request) {
 
 		// Get data from HTML forms
@@ -111,30 +178,30 @@ func main() {
 			fmt.Println(err)
 		}
 		id := r.PostFormValue("machineID")
-		
+
 		js := functions.GetMachine(id) // To JSON
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-				
+
 		var ba BasicMachine
 		err = json.Unmarshal(js, &ba)
-		
+
 		// Print response as HTML
-		if  ba.ID == "" {
+		if ba.ID == "" {
 			p := path.Join("static", "base.html")
 			tmpl, err := template.ParseFiles(p)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-		
+
 			if err := tmpl.Execute(w, "Machine does not exists"); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
-			
+
 		} else {
 			p := path.Join("static", "get.html")
 			tmpl, err := template.ParseFiles(p)
@@ -142,11 +209,11 @@ func main() {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-		
+
 			if err := tmpl.Execute(w, ba); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
-		}	
+		}
 
 	}
 
@@ -180,7 +247,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -215,7 +282,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -247,7 +314,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -279,7 +346,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -305,14 +372,14 @@ func main() {
 			return
 		}
 
-			// Print response as HTML
+		// Print response as HTML
 		p := path.Join("static", "base.html")
 		tmpl, err := template.ParseFiles(p)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -344,7 +411,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -376,7 +443,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -409,7 +476,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -441,7 +508,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -474,7 +541,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -507,7 +574,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	
+
 		if err := tmpl.Execute(w, string(js)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -518,6 +585,8 @@ func main() {
 	http.HandleFunc("/menuLessee", menuLessee)
 	http.HandleFunc("/menuLessor", menuLessor)
 	http.HandleFunc("/menuAdmin", menuAdmin)
+	http.HandleFunc("/cch", cch)
+	http.HandleFunc("/joinorg3", joinorg3)
 	http.HandleFunc("/getall", getall)
 	http.HandleFunc("/getmachine", getmachine)
 	http.HandleFunc("/newmachine", newmachine)

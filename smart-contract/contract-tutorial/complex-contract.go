@@ -7,10 +7,6 @@ import (
 	"fmt"
 	"time"
 
-	. "github.com/iotaledger/iota.go/api"
-	"github.com/iotaledger/iota.go/bundle"
-	"github.com/iotaledger/iota.go/trinary"
-
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 	"github.com/rafatorrealba/hlf-iota-conector/iota" // Module of IOTA Connector
 )
@@ -24,8 +20,8 @@ type ComplexContract struct {
 var walletSeed1 string = "SEED"
 var walletSeed2 string
 var walletAddress1 string
-var walletAddress2 string = "GXLJHXUBWOQDQUOVJXBSIWV9JUJMLBQPILOGIZGWVVLSMJCOOORMAGAYDKLLUFOKUFLVGQZYEHKSSJDIWVUYA9NDAC"
-var walletKeyIndex uint64 = 3
+var walletAddress2 string = "YVPHCOQE9YTMVXMYJOMUTSZCGXQIUZ9RNFQUTNVNCPN9YZQMCXBHFPOHLSLPOOQULHYSFGWPWWHOAR9KCMIDDZU9ID"
+var walletKeyIndex uint64 = 0
 var amount uint64 = 0
 
 // NewMachine function adds a new basic machine to the world state using id as key
@@ -89,8 +85,9 @@ func (cc *ComplexContract) ReserveMachine(ctx CustomTransactionContextInterface,
 	}
 
 	//IOTA Transfer
-	amount = ba.ReservePrice                          // Assinging the reserved price as amount to transfer
-	TransferIOTA(walletSeed1, walletAddress2, amount) // Init transfer
+	amount = ba.ReservePrice // Assinging the reserved price as amount to transfer
+	newKeyIndex := iota.TransferTokens(walletSeed1, walletKeyIndex, walletAddress2, amount)
+	walletKeyIndex = newKeyIndex
 
 	// Updating the state of the machine
 	ba.Lessee = lesseeAdd
@@ -217,8 +214,9 @@ func (cc *ComplexContract) PayPerUse(ctx CustomTransactionContextInterface, id s
 	}
 
 	//IOTA transfer
-	amount = ba.PricePerHour * workhoursAdd           //Assinging the reserved price as amount to transfer
-	TransferIOTA(walletSeed1, walletAddress2, amount) // Init transfer
+	amount = ba.PricePerHour * workhoursAdd //Assinging the reserved price as amount to transfer
+	newKeyIndex := iota.TransferTokens(walletSeed1, walletKeyIndex, walletAddress2, amount)
+	walletKeyIndex = newKeyIndex
 
 	// Updating the state of the machine
 	ba.SetStatusWorking()
@@ -533,42 +531,7 @@ func (cc *ComplexContract) GetAll(ctx CustomTransactionContextInterface) ([]*Bas
 	return bas, nil
 }
 
-func TransferIOTA(seed string, recipientAddress string, amount uint64) {
-	// Connect to a node
-	api, err := ComposeAPI(HTTPClientSettings{URI: "https://nodes.thetangle.org:443"})
-	must(err)
-
-	// Define an address to which to send IOTA tokens
-	address := trinary.Trytes(recipientAddress)
-
-	// Define an input transaction object
-	// that sends 1 i to your new address
-	transfers := bundle.Transfers{
-		{
-			Address: address,
-			Value:   amount,
-		},
-	}
-
-	fmt.Println("Sending 1 i to " + walletAddress2)
-
-	trytes, err := api.PrepareTransfers(seed, transfers, PrepareTransfersOptions{})
-	must(err)
-
-	myBundle, err := api.SendTrytes(trytes, 3, 14)
-	must(err)
-
-	hash, _ := json.Marshal(myBundle)
-	fmt.Println("HASH: " + string(hash[9:92]) + "\n")
-}
-
-func must(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
 // GetEvaluateTransactions returns functions of ComplexContract not to be tagged as submit
-//func (cc *ComplexContract) GetEvaluateTransactions() []string {
-//	return []string{"GetMachine"}
-//}
+func (cc *ComplexContract) GetEvaluateTransactions() []string {
+	return []string{"GetMachine"}
+}

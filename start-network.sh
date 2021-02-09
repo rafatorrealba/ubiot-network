@@ -1,3 +1,7 @@
+cd /home/rtorrealba/ubiot-network/explorer
+
+docker-compose down
+
 cd /home/rtorrealba/ubiot-network/test-network
 
 ./network.sh down
@@ -13,6 +17,12 @@ docker ps
 docker ps -a
 
 docker volume ls
+
+sudo rm -rf /home/rtorrealba/ubiot-network/explorer/oraganizations
+
+sudo rm -rf /home/rtorrealba/ubiot-network/explorer/connection-profile/first-network.json
+
+cp -r /home/rtorrealba/ubiot-network/first-network.json /home/rtorrealba/ubiot-network/explorer/connection-profile/
 
 # Deploying a smart contract to a channel
 ./network.sh down
