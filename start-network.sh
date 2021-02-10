@@ -42,7 +42,7 @@ peer version
 
 #Package chaincode
 peer lifecycle chaincode package basic.tar.gz --path ../smart-contract/contract-tutorial/ --lang golang --label basic_1.0
-
+################
 #Org1
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_LOCALMSPID="Org1MSP"
@@ -102,27 +102,6 @@ peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride o
 
 peer lifecycle chaincode querycommitted --channelID mychannel --name basic --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-# Impplementacion del explorador de la red 
-cd
-
-sudo chmod 777 -R ubiot-network/test-network/organizations/
-
-cp -r ubiot-network/test-network/organizations/ ubiot-network/explorer/
-
-cd ubiot-network/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/
-
-CLAVE=$(ls)
-
-cd 
-
-sed -i "s/CLAVE/$CLAVE/g" ubiot-network/explorer/connection-profile/first-network.json
-
-cd ubiot-network/explorer
-
-docker-compose up -d
-
-cd
-
 echo 'httpOptions:
       verify: false
 
@@ -168,9 +147,31 @@ orderers:
 
     grpcOptions:
       ssl-target-name-override: orderer.example.com' >> /home/rtorrealba/ubiot-network/test-network/organizations/peerOrganizations/org2.example.com/connection-org2.yaml
+####################
 
 sudo rm -rf /home/rtorrealba/ubiot-network/app/keystore
 sudo rm -rf /home/rtorrealba/ubiot-network/app/wallet
+
+# Impplementacion del explorador de la red 
+cd
+
+sudo chmod 777 -R ubiot-network/test-network/organizations/
+
+cp -r ubiot-network/test-network/organizations/ ubiot-network/explorer/
+
+cd ubiot-network/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/
+
+CLAVE=$(ls)
+
+cd 
+
+sed -i "s/CLAVE/$CLAVE/g" ubiot-network/explorer/connection-profile/first-network.json
+
+cd ubiot-network/explorer
+
+docker-compose up -d
+
+cd
 
 MYIP=`curl checkip.amazonaws.com`
 PORT=":8081"

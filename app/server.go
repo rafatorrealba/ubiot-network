@@ -98,10 +98,60 @@ func main() {
 			return
 		}
 
-		if err := tmpl.Execute(w, "Your channell was created successfully"); err != nil {
+		if err := tmpl.Execute(w, "Your channel was created successfully"); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
+	}
+
+	createorg3 := func(w http.ResponseWriter, r *http.Request) {
+
+		// Function execution
+		err := exec.Command("bash", "./scripts/createorg3.sh").Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if err := tmpl.Execute(w, "Organization 3 successfully created"); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	}
+
+	installSC := func(w http.ResponseWriter, r *http.Request) {
+
+		// Function execution
+		err := exec.Command("bash", "./scripts/installSC.sh").Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		p := path.Join("static", "base.html")
+		tmpl, err := template.ParseFiles(p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if err := tmpl.Execute(w, "SC successfully installed"); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	joinorg3 := func(w http.ResponseWriter, r *http.Request) {
@@ -586,7 +636,9 @@ func main() {
 	http.HandleFunc("/menuLessor", menuLessor)
 	http.HandleFunc("/menuAdmin", menuAdmin)
 	http.HandleFunc("/cch", cch)
+	http.HandleFunc("/createorg3", createorg3)
 	http.HandleFunc("/joinorg3", joinorg3)
+	http.HandleFunc("/installSC", installSC)
 	http.HandleFunc("/getall", getall)
 	http.HandleFunc("/getmachine", getmachine)
 	http.HandleFunc("/newmachine", newmachine)
